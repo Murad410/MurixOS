@@ -27,11 +27,22 @@ main:
 	mov ss,ax
 	mov sp,0x7C00
 	mov si,msg
-	call print_loop
+	call print
+	msg db "Hello From Bootloader!",0x0D,0x0A,0
 
-msg:
-	hello db "Hello From Bootloader!",0
-
+load_kernel:
+	mov ax,0x1000
+	mov es,ax
+	xor bx,bx
+	mov al,2
+	mov ch,0
+	mov dh,0
+	mov cl,2
+	mov dl,0x0
+	mov ah,0x02
+	int 0x13
+	jmp 1000:0000
+	
 halt:
 	jmp halt
 
